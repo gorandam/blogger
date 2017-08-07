@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Like;
 use App\Post;
 use App\Tag;
+use Auth;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -54,11 +55,16 @@ class PostController extends Controller
             'title' => 'required|min:5',
             'content' => 'required|min:10'
         ]);
+        //Here we create code to check if user is logged of register(authenticated) - we will change it later with route protection
+        $user = Auth::user();// Here we use Auth facade to get the user if it is authenticated
+        if (!$user) {
+          return redirect()->back();
+        }
         $post = new Post([
           'title' => $request->input('title'),
           'content' => $request->input('content')
         ]);
-        $post->save();
+        $user->posts()->save($post); // Here we create relations and store eloquent instance in post table with user id of authenticated user
         $post->tags()->attach($request->input('tags') === null ? [] : $request->input('tags'));
 
         return redirect()->route('admin.index')->with('info', 'Post created, Title is: ' . $request->input('title'));

@@ -61,3 +61,5 @@ Route::group(['prefix' => 'admin'], function() {
         'as' => 'admin.delete'
     ]);
 });
+
+Auth::routes();
