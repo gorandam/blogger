@@ -5,8 +5,10 @@
             <ul class="nav navbar-nav">
                 <li><a href="{{ route('blog.index') }}">Blog</a></li>
                 <li><a href="{{ route('other.about') }}">About</a></li>
+                @if(!Auth::check())
                 <li><a href="{{ route('login') }}">Login</a></li>
                 <li><a href="{{ route('register') }}">Register</a></li>
+                @else
                 <li><a href="{{ route('admin.index') }}">Posts</a></li>
                 <li>
                     <a href="{{ route('logout') }}"
@@ -19,6 +21,7 @@
                         {{ csrf_field() }}
                     </form>
                 </li>
+                @endif
             </ul>
         </div>
     </div>

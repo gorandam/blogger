@@ -27,6 +27,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    //Here we define one to many relationship method
     public function posts()
     {
       return $this->hasMany('App\Post');

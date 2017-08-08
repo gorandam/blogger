@@ -62,4 +62,10 @@ Route::group(['prefix' => 'admin'], function() {
     ]);
 });
 
+//Authentication routes
 Auth::routes();
+
+Route::post('login', [
+  'uses' => 'SigninController@signin',
+  'as' => 'auth.signin'
+]);
