@@ -6,6 +6,7 @@ use App\Like;
 use App\Post;
 use App\Tag;
 use Auth;
+use Gate;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -88,7 +89,10 @@ class PostController extends Controller
             'title' => 'required|min:5',
             'content' => 'required|min:10'
         ]);
-        $post = Post::find($request->input('id'));
+        $post = Post::find($request->input('id'));//Here we find the post to update...
+        if(Gate::denies('manipulating-post', $post)){// Here we say if gate 'manipulating-post' denies $post
+          return redirect()->back();
+        }
         $post->title = $request->input('title');
         $post->content = $request->input('content');
         $post->save();
@@ -104,6 +108,9 @@ class PostController extends Controller
         return redirect()->back();
       }
       $post = Post::find($id);
+      if(Gate::denies('manipulating-post', $post)){// Here we say if gate 'manipulating-post' denies $post [ here we use autorisation]
+        return redirect()->back();
+      }
       $post->likes()->delete();
       $post->tags()->detach();
       $post->delete();
