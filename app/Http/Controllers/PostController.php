@@ -19,9 +19,9 @@ class PostController extends Controller
 
     public function getAdminIndex()
     {
-        if(!Auth::check()){//This code will check if user is authenticated and return boolean value
-          return redirect()->back();
-        }
+      //  if(!Auth::check()){//This code will check if user is authenticated and return boolean value
+        //  return redirect()->back();
+        //}
         $posts = Post::orderBy('title', 'asc')->get();
         return view('admin.index', ['posts' => $posts]);
     }
@@ -42,18 +42,18 @@ class PostController extends Controller
 
     public function getAdminCreate()
     {
-        if(!Auth::check()){//This code will check if user is authenticated and return boolean value
-          return redirect()->back();
-        }
+        //if(!Auth::check()){//This code will check if user is authenticated and return boolean value
+          //return redirect()->back();
+        //}
         $tags = Tag::all();
         return view('admin.create', ['tags' => $tags]);
     }
 
     public function getAdminEdit($id)
     {
-        if(!Auth::check()){//This code will check if user is authenticated and return boolean value
-          return redirect()->back();
-        }
+        //if(!Auth::check()){//This code will check if user is authenticated and return boolean value
+        //  return redirect()->back();
+        //}
         $post = Post::find($id);
         $tags = Tag::all();
         return view('admin.edit', ['post' => $post, 'postId' => $id, 'tags' => $tags]);
@@ -67,9 +67,9 @@ class PostController extends Controller
         ]);
         //Here we create code to check if user is logged of register(authenticated) - we will change it later with route protection
         $user = Auth::user();// Here we use Auth facade to get the user if it is authenticated
-        if (!$user) {
-          return redirect()->back();
-        }
+        //if (!$user) {
+          //return redirect()->back();
+        //}
         $post = new Post([
           'title' => $request->input('title'),
           'content' => $request->input('content')
@@ -82,9 +82,9 @@ class PostController extends Controller
 
     public function postAdminUpdate(Request $request)
     {
-        if(!Auth::check()){//This code will check if user is authenticated and return boolean value
-          return redirect()->back();
-        }
+        //if(!Auth::check()){//This code will check if user is authenticated and return boolean value
+          //return redirect()->back();
+        //}
         $this->validate($request, [
             'title' => 'required|min:5',
             'content' => 'required|min:10'
@@ -104,11 +104,11 @@ class PostController extends Controller
 
     public function getAdminDelete($id)
     {
-      if(!Auth::check()){//This code will check if user is authenticated and return boolean value
-        return redirect()->back();
-      }
+      //if(!Auth::check()){//This code will check if user is authenticated and return boolean value
+        //return redirect()->back();
+      //}
       $post = Post::find($id);
-      if(Gate::denies('manipulating-post', $post)){// Here we say if gate 'manipulating-post' denies $post [ here we use autorisation]
+      if(Gate::denies('manipulating-post', $post)){// Here we say if gate 'manipulating-post' denies $post [ here we ]
         return redirect()->back();
       }
       $post->likes()->delete();
