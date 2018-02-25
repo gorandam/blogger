@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/', [
     'uses' => 'PostController@getIndex',
     'as' => 'blog.index'

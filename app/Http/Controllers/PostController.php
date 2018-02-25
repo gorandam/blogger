@@ -90,6 +90,7 @@ class PostController extends Controller
             'content' => 'required|min:10'
         ]);
         $post = Post::find($request->input('id'));//Here we find the post to update...
+        //This prevents us to update post wich is not ours
         if(Gate::denies('manipulating-post', $post)){// Here we say if gate 'manipulating-post' denies $post
           return redirect()->back();
         }
